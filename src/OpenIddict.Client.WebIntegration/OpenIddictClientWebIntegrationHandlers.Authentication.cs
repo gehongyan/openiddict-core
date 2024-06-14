@@ -44,6 +44,13 @@ public static partial class OpenIddictClientWebIntegrationHandlers
                     throw new ArgumentNullException(nameof(context));
                 }
 
+                // Alipay requires the "app_id" parameter instead of "client_id".
+                if (context.Registration.ProviderType is ProviderTypes.Alipay)
+                {
+                    context.Request["app_id"] = context.Registration.ClientId;
+                    context.Request.ClientId = null;
+                }
+
                 // Some providers implement old drafts of the OAuth 2.0 specification that didn't support
                 // the "response_type" parameter but relied on a "type" parameter to determine the type
                 // of flow (web server or user agent-based). Since the "user_agent" value more or less

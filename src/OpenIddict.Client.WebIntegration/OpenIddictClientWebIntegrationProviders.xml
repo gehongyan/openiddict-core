@@ -45,6 +45,32 @@
   </Provider>
 
   <!--
+                                              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                                              █ ▄▄▀██ ████▄ ▄██ ▄▄ ██ ▄▄▀██ ███ ██
+                                              █ ▀▀ ██ █████ ███ ▀▀ ██ ▀▀ ██▄▀▀▀▄██
+                                              █ ██ ██ ▀▀ █▀ ▀██ █████ ██ ████ ████
+                                              ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  -->
+
+  <Provider Name="Alipay" Id="a23a6743-912e-46be-9ff1-f83705aa3511"
+            Documentation="https://opendocs.alipay.com/open/263/105808">
+    <Environment Issuer="https://www.alipay.com/">
+      <Configuration AuthorizationEndpoint="https://openauth.alipay.com/oauth2/publicAppAuthorize.htm"
+                     TokenEndpoint="https://openapi.alipay.com/gateway.do"
+                     UserinfoEndpoint="https://openapi.alipay.com/gateway.do">
+        <GrantType Value="authorization_code" />
+        <GrantType Value="refresh_token" />
+      </Configuration>
+
+      <!--
+        Note: Alipay requires sending the "auth_user" scope to be able to use the dynamic access token info endpoint.
+      -->
+
+      <Scope Name="auth_user" Default="true" Required="true" />
+    </Environment>
+  </Provider>
+
+  <!--
                                             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
                                             █ ▄▄▀██ ▄▀▄ █ ▄▄▀██ ▄▄▄ ██ ▄▄▄ ██ ▀██ ██
                                             █ ▀▀ ██ █ █ █ ▀▀ ██▀▀▀▄▄██ ███ ██ █ █ ██
