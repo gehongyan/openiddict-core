@@ -683,6 +683,13 @@ public static partial class OpenIddictClientWebIntegrationHandlers
                 };
             }
 
+            // osu! requires the "public" scope for client credentials grant, as tokens without scopes are invalid.
+            else if (context.GrantType is GrantTypes.ClientCredentials &&
+                context.Registration.ProviderType is ProviderTypes.Osu)
+            {
+                context.TokenRequest.Scope = "public";
+            }
+
             return ValueTask.CompletedTask;
         }
     }
@@ -1241,6 +1248,18 @@ public static partial class OpenIddictClientWebIntegrationHandlers
             else if (context.Registration.ProviderType is ProviderTypes.Weibo)
             {
                 context.UserInfoRequest["uid"] = context.TokenResponse?["uid"];
+            }
+
+            // osu! allows specifying a game mode via the "mode" parameter to retrieve
+            // mode-specific statistics (e.g., 'osu', 'taiko', 'fruits', 'mania').
+            else if (context.Registration.ProviderType is ProviderTypes.Osu)
+            {
+                var settings = context.Registration.GetOsuSettings();
+
+                if (!string.IsNullOrEmpty(settings.GameMode))
+                {
+                    context.UserInfoRequest["mode"] = settings.GameMode;
+                }
             }
 
             return ValueTask.CompletedTask;
