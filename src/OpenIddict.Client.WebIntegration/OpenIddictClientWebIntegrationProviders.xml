@@ -1748,6 +1748,38 @@
   </Provider>
 
   <!--
+                                               ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                                               ██ ▄▄▄ ██ ▄▄▀██ ███ ██ ██ ██ ██
+                                               ██ ███ ██ ▀▀▄██ █ █ ██ ██ ██ ██
+                                               ██ ▀▀▀ ██ ██ ██ ██▄ ██▄▀▀▄██ ██
+                                               ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  -->
+
+  <Provider Name="Osu" DisplayName="osu!" Id="924114e6-6334-4124-bbf9-46cd5458da25"
+            Documentation="https://osu.ppy.sh/docs/index.html#client-credentials-grant">
+    <Environment Issuer="https://osu.ppy.sh/">
+      <Configuration AuthorizationEndpoint="https://osu.ppy.sh/oauth/authorize"
+                     TokenEndpoint="https://osu.ppy.sh/oauth/token"
+                     UserInfoEndpoint="https://osu.ppy.sh/api/v2/me">
+        <CodeChallengeMethod Value="S256" />
+
+        <GrantType Value="authorization_code" />
+        <GrantType Value="client_credentials" />
+        <GrantType Value="refresh_token" />
+
+        <TokenEndpointAuthMethod Value="client_secret_post" />
+      </Configuration>
+
+      <!--
+        Note: osu! requires at least the 'identify' scope for authorization code flow.
+      -->
+
+      <Scope Name="identify" Default="true" Required="false" />
+      <Scope Name="public" Default="false" Required="false" />
+    </Environment>
+  </Provider>
+
+  <!--
                                           ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
                                           ██ ▄▄ █ ▄▄▀█▄▄ ▄▄██ ▄▄▀██ ▄▄▄██ ▄▄▄ ██ ▀██ ██
                                           ██ ▀▀ █ ▀▀ ███ ████ ▀▀▄██ ▄▄▄██ ███ ██ █ █ ██
