@@ -1190,18 +1190,6 @@ public static partial class OpenIddictClientWebIntegrationHandlers
                 context.UserInfoRequest["query"] = $"query {{ self {{ {string.Join(" ", settings.UserFields)} }} }}";
             }
 
-            // osu! allows specifying a game mode via the "mode" parameter to retrieve
-            // mode-specific statistics (e.g., 'osu', 'taiko', 'fruits', 'mania').
-            else if (context.Registration.ProviderType is ProviderTypes.Osu)
-            {
-                var settings = context.Registration.GetOsuSettings();
-
-                if (!string.IsNullOrEmpty(settings.GameMode))
-                {
-                    context.UserInfoRequest["mode"] = settings.GameMode;
-                }
-            }
-
             // Patreon limits the number of fields returned by the userinfo endpoint
             // but allows returning additional information using special parameters that
             // determine what fields will be returned as part of the userinfo response.
