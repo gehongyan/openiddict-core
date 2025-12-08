@@ -1748,11 +1748,11 @@
   </Provider>
 
   <!--
-                                               ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-                                               ██ ▄▄▄ ██ ▄▄▀██ ███ ██ ██
-                                               ██ ███ ██ ▀▀▄██ █ █ ██ ██
-                                               ██ ▀▀▀ ██ ▀▀ ██ ▀▀▀ ██ ██
-                                               ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+                                                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                                                   ██ ▄▄▄ ██ ▄▄▄ ██ ██ ██ ██
+                                                   ██ ███ ██▄▄▄▀▀██ ██ ██ ██
+                                                   ██ ▀▀▀ ██ ▀▀▀ ██▄▀▀▄██▀██
+                                                   ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   -->
 
   <Provider Name="Osu" DisplayName="osu!" Id="924114e6-6334-4124-bbf9-46cd5458da25"
@@ -1773,7 +1773,7 @@
     <Constant Class="GameModes" Value="mania"  Name="Mania"    />
 
     <Setting PropertyName="GameMode" ParameterName="mode" Type="String" Required="false"
-             Description="The game mode to retrieve statistics for (e.g., 'osu', 'taiko', 'fruits', 'mania')" />
+             Description="The game mode to retrieve statistics for (e.g., 'osu', 'taiko', 'fruits', 'mania'). User default mode will be used if not specified." />
   </Provider>
 
   <!--
