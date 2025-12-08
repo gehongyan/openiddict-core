@@ -666,6 +666,13 @@ public static partial class OpenIddictClientWebIntegrationHandlers
                 context.TokenRequest.UserCode = code;
             }
 
+            // osu! requires the "public" scope for client credentials grant, as tokens without scopes are invalid.
+            else if (context.GrantType is GrantTypes.ClientCredentials &&
+                context.Registration.ProviderType is ProviderTypes.Osu)
+            {
+                context.TokenRequest.Scope = "public";
+            }
+
             // VK ID requires attaching a non-standard "device_id" parameter to all token requests.
             //
             // This parameter is either resolved from the authorization response (for the authorization
@@ -681,13 +688,6 @@ public static partial class OpenIddictClientWebIntegrationHandlers
 
                     _ => throw new InvalidOperationException(SR.GetResourceString(SR.ID0467))
                 };
-            }
-
-            // osu! requires the "public" scope for client credentials grant, as tokens without scopes are invalid.
-            else if (context.GrantType is GrantTypes.ClientCredentials &&
-                context.Registration.ProviderType is ProviderTypes.Osu)
-            {
-                context.TokenRequest.Scope = "public";
             }
 
             return ValueTask.CompletedTask;
@@ -1190,6 +1190,18 @@ public static partial class OpenIddictClientWebIntegrationHandlers
                 context.UserInfoRequest["query"] = $"query {{ self {{ {string.Join(" ", settings.UserFields)} }} }}";
             }
 
+            // osu! allows specifying a game mode via the "mode" parameter to retrieve
+            // mode-specific statistics (e.g., 'osu', 'taiko', 'fruits', 'mania').
+            else if (context.Registration.ProviderType is ProviderTypes.Osu)
+            {
+                var settings = context.Registration.GetOsuSettings();
+
+                if (!string.IsNullOrEmpty(settings.GameMode))
+                {
+                    context.UserInfoRequest["mode"] = settings.GameMode;
+                }
+            }
+
             // Patreon limits the number of fields returned by the userinfo endpoint
             // but allows returning additional information using special parameters that
             // determine what fields will be returned as part of the userinfo response.
@@ -1248,18 +1260,6 @@ public static partial class OpenIddictClientWebIntegrationHandlers
             else if (context.Registration.ProviderType is ProviderTypes.Weibo)
             {
                 context.UserInfoRequest["uid"] = context.TokenResponse?["uid"];
-            }
-
-            // osu! allows specifying a game mode via the "mode" parameter to retrieve
-            // mode-specific statistics (e.g., 'osu', 'taiko', 'fruits', 'mania').
-            else if (context.Registration.ProviderType is ProviderTypes.Osu)
-            {
-                var settings = context.Registration.GetOsuSettings();
-
-                if (!string.IsNullOrEmpty(settings.GameMode))
-                {
-                    context.UserInfoRequest["mode"] = settings.GameMode;
-                }
             }
 
             return ValueTask.CompletedTask;
